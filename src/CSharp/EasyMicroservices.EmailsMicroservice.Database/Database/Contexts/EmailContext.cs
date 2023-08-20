@@ -12,6 +12,7 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
             _builder = builder;
         }
         public DbSet<EmailEntity> Emails { get; set; }
+        public DbSet<EmailServerEntity> EmailServers { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

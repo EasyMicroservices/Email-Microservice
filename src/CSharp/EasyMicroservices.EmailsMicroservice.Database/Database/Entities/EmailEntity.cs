@@ -14,6 +14,5 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Entities
     public class EmailEntity : EmailSchema, IIdSchema<long>
     {
         public long Id { get; set; }
-        public string Address { get; set; }
     }
 }

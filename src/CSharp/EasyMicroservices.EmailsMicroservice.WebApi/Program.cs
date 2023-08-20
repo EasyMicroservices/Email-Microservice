@@ -48,7 +48,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             string webRootPath = @Directory.GetCurrentDirectory();
 
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<EmailEntity, AddEmailContract, UpdateEmailContract, EmailContract>());
+            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract>());
+            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract>());
             builder.Services.AddScoped<IDatabaseBuilder>(serviceProvider => new DatabaseBuilder());
    
             builder.Services.AddScoped<IDependencyManager>(service => new DependencyManager());

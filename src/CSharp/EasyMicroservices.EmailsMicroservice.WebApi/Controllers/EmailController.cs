@@ -6,9 +6,9 @@ using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
-    public class EmailController : SimpleQueryServiceController<EmailEntity, AddEmailContract, UpdateEmailContract, EmailContract, long>
+    public class EmailController : SimpleQueryServiceController<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>
     {
-        public EmailController(IContractLogic<EmailEntity, AddEmailContract, UpdateEmailContract, EmailContract, long> contractReadable) : base(contractReadable)
+        public EmailController(IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> contractReadable) : base(contractReadable)
         {
 
         }
