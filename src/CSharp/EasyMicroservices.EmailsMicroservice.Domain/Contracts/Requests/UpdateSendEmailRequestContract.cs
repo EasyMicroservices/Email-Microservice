@@ -10,8 +10,8 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
     public class UpdateSendEmailRequestContract
     {
         public long Id { get; set; }
-        public string EmailServerId { get; set; }
-        public string FromEmailId { get; set; }
+        public long EmailServerId { get; set; }
+        //public string FromEmailId { get; set; }
         public EmailStatusType Status { get; set; }
     }
 }

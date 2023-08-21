@@ -9,8 +9,8 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
 {
     public class CreateSendEmailRequestContract
     {
-        public string EmailServerId { get; set; }
-        public string FromEmailId { get; set; }
+        public long EmailServerId { get; set; }
+        //public long  FromEmailId { get; set; }
         public EmailStatusType Status { get; set; }
     }
 }
