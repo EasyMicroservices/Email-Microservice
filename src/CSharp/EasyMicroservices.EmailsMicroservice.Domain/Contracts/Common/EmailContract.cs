@@ -10,6 +10,7 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Common
     public class EmailContract : IUniqueIdentitySchema, ISoftDeleteSchema, IDateTimeSchema
     {
         public long Id { get; set; }
+        public long SendEmailId { get; set; }
         public string Address { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime? ModificationDateTime { get; set; }

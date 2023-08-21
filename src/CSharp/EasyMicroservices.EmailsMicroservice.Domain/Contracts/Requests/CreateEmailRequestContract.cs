@@ -11,6 +11,8 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
     {
         [EmailAddress]
         public string Address { get; set; }
+        public long SendEmailId { get; set; }
+
         public string UniqueIdentity { get; set; }
     }
 }
