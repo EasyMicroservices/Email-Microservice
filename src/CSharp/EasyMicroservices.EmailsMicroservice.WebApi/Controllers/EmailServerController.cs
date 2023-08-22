@@ -3,6 +3,8 @@ using EasyMicroservices.Cores.Database.Interfaces;
 using EasyMicroservices.EmailsMicroservice.Contracts.Common;
 using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
+using EasyMicroservices.ServiceContracts;
+using Abp.Runtime.Security;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
