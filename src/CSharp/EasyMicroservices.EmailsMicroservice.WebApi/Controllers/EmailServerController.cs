@@ -10,10 +10,10 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
     public class EmailServerController : SimpleQueryServiceController<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long>
     {
-        private readonly IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _contralogic;
-        public EmailServerController(IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> contralogic) : base(contralogic)
+        private readonly IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _contractlogic;
+        public EmailServerController(IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> contractlogic) : base(contractlogic)
         {
-            _contralogic = contralogic;
+            _contractlogic = contractlogic;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Schemas
     public class SendEmailSchema  : IUniqueIdentitySchema, IDateTimeSchema, ISoftDeleteSchema
     {
         public string UniqueIdentity { get; set; }
+        public string EmailAddress { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime? ModificationDateTime { get; set; }
         public DateTime? DeletedDateTime { get; set; }
