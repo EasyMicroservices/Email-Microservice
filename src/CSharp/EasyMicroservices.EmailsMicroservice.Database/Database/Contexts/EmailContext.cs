@@ -13,6 +13,7 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
         }
         public DbSet<EmailEntity> Emails { get; set; }
         public DbSet<EmailServerEntity> EmailServers { get; set; }
+        public DbSet<QueueEmailEntity> QueueEmails { get; set; }
         public DbSet<SendEmailEntity> SendEmails { get; set; }
 
 
@@ -30,10 +31,6 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
             modelBuilder.Entity<EmailEntity>(model =>
             {
                 model.HasKey(x => x.Id);
-
-                model.HasOne(x => x.SendEmails)
-                .WithMany(x => x.ToEmails)
-                .HasForeignKey(x => x.SendEmailId);
             });
 
             modelBuilder.Entity<EmailServerEntity>(model =>
@@ -41,13 +38,26 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
                 model.HasKey(x => x.Id);
             });
 
-            modelBuilder.Entity<SendEmailEntity>(model =>
+            modelBuilder.Entity<QueueEmailEntity>(model =>
             {
                 model.HasKey(x => x.Id);
 
                 model.HasOne(x => x.EmailServers)
-                .WithMany(x => x.SendEmails)
+                .WithMany(x => x.QueueEmails)
                 .HasForeignKey(x => x.EmailServerId);
+
+                model.HasOne(x => x.Emails)
+                .WithMany(x => x.QueueEmails)
+                .HasForeignKey(x => x.FromEmailId);
+            });
+            modelBuilder.Entity<SendEmailEntity>(model =>
+            {
+                model.HasKey(x => x.Id);
+
+                model.HasOne(x => x.QueueEmails)
+                .WithMany(x => x.SendEmails)
+                .HasForeignKey(x => x.QueueEmailId);
+
             });
         }
     }

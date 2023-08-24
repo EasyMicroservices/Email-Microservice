@@ -10,9 +10,12 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
+<<<<<<< HEAD
             3.1.x
             5.0.x
             6.0.x
+=======
+>>>>>>> 47c72c418b676634e1cbb141304b4b12e6a615e0
             7.0.x
         env:
           DOTNET_INSTALL_DIR: /usr/share/dotnet

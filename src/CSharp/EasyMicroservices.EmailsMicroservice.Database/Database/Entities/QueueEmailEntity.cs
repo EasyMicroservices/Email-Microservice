@@ -1,19 +1,21 @@
 ﻿using EasyMicroservices.Cores.Interfaces;
 using EasyMicroservices.EmailsMicroservice.Database.Schemas;
-using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Entities
 {
-    public class EmailServerEntity : EmailServerSchema, IIdSchema<long>
+    public class QueueEmailEntity : QueueEmailSchema, IIdSchema<long>
     {
         public long Id { get; set; }
-        public ICollection<QueueEmailEntity> QueueEmails { get; set; }
+        public long EmailServerId { get; set; }
+        public EmailServerEntity EmailServers { get; set; }
+        public long FromEmailId { get; set; }
+        public EmailEntity Emails { get; set; }
+        public ICollection<SendEmailEntity> SendEmails { get; set; }
 
     }
 }
