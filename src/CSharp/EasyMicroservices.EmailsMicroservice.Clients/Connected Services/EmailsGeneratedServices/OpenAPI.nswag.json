@@ -5,104 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Email/Add": {
-      "post": {
-        "tags": [
-          "Email"
-        ],
-        "operationId": "Add",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEmailRequestContract"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEmailRequestContract"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEmailRequestContract"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Int64MessageContract"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Int64MessageContract"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Int64MessageContract"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Email/Update": {
-      "put": {
-        "tags": [
-          "Email"
-        ],
-        "operationId": "Update",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmailRequestContract"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmailRequestContract"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateEmailRequestContract"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Email/GetById": {
       "post": {
         "tags": [
@@ -173,6 +75,104 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Email/Add": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "operationId": "Add",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Email/Update": {
+      "put": {
+        "tags": [
+          "Email"
+        ],
+        "operationId": "Update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailRequestContract"
               }
             }
           }
@@ -751,27 +751,27 @@
         }
       }
     },
-    "/api/SendEmail/Add": {
+    "/api/QueueEmail/Add": {
       "post": {
         "tags": [
-          "SendEmail"
+          "QueueEmail"
         ],
         "operationId": "Add3",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+                "$ref": "#/components/schemas/CreateQueueEmailRequestContract"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+                "$ref": "#/components/schemas/CreateQueueEmailRequestContract"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+                "$ref": "#/components/schemas/CreateQueueEmailRequestContract"
               }
             }
           }
@@ -800,27 +800,27 @@
         }
       }
     },
-    "/api/SendEmail/Update": {
+    "/api/QueueEmail/Update": {
       "put": {
         "tags": [
-          "SendEmail"
+          "QueueEmail"
         ],
         "operationId": "Update3",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+                "$ref": "#/components/schemas/UpdateQueueEmailRequestContract"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+                "$ref": "#/components/schemas/UpdateQueueEmailRequestContract"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+                "$ref": "#/components/schemas/UpdateQueueEmailRequestContract"
               }
             }
           }
@@ -831,17 +831,341 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/GetById": {
+      "post": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "GetById3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64GetIdRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64GetIdRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64GetIdRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/GetByUniqueIdentity": {
+      "post": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "GetByUniqueIdentity3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/HardDeleteById": {
+      "delete": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "HardDeleteById3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64DeleteRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64DeleteRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64DeleteRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/SoftDeleteById": {
+      "delete": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "SoftDeleteById3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64SoftDeleteRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64SoftDeleteRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Int64SoftDeleteRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/GetAll": {
+      "get": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "GetAll3",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QueueEmail/GetAllByUniqueIdentity": {
+      "post": {
+        "tags": [
+          "QueueEmail"
+        ],
+        "operationId": "GetAllByUniqueIdentity3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUniqueIdentityRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SendEmail/Add": {
+      "post": {
+        "tags": [
+          "SendEmail"
+        ],
+        "operationId": "Add4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSendEmailRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int64MessageContract"
                 }
               }
             }
@@ -854,7 +1178,7 @@
         "tags": [
           "SendEmail"
         ],
-        "operationId": "GetById3",
+        "operationId": "GetById4",
         "requestBody": {
           "content": {
             "application/json": {
@@ -903,7 +1227,7 @@
         "tags": [
           "SendEmail"
         ],
-        "operationId": "GetByUniqueIdentity3",
+        "operationId": "GetByUniqueIdentity4",
         "requestBody": {
           "content": {
             "application/json": {
@@ -947,12 +1271,61 @@
         }
       }
     },
+    "/api/SendEmail/Update": {
+      "put": {
+        "tags": [
+          "SendEmail"
+        ],
+        "operationId": "Update4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSendEmailRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendEmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SendEmail/HardDeleteById": {
       "delete": {
         "tags": [
           "SendEmail"
         ],
-        "operationId": "HardDeleteById3",
+        "operationId": "HardDeleteById4",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1001,7 +1374,7 @@
         "tags": [
           "SendEmail"
         ],
-        "operationId": "SoftDeleteById3",
+        "operationId": "SoftDeleteById4",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1050,7 +1423,7 @@
         "tags": [
           "SendEmail"
         ],
-        "operationId": "GetAll3",
+        "operationId": "GetAll4",
         "responses": {
           "200": {
             "description": "Success",
@@ -1080,7 +1453,7 @@
         "tags": [
           "SendEmail"
         ],
-        "operationId": "GetAllByUniqueIdentity3",
+        "operationId": "GetAllByUniqueIdentity4",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1136,10 +1509,6 @@
             "format": "email",
             "nullable": true
           },
-          "sendEmailId": {
-            "type": "integer",
-            "format": "int64"
-          },
           "uniqueIdentity": {
             "type": "string",
             "nullable": true
@@ -1175,11 +1544,15 @@
           }
         }
       },
-      "CreateSendEmailRequestContract": {
+      "CreateQueueEmailRequestContract": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "emailServerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fromEmailId": {
             "type": "integer",
             "format": "int64"
           },
@@ -1192,15 +1565,38 @@
           }
         }
       },
+      "CreateSendEmailRequestContract": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "queueEmailId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "uniqueIdentity": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "EmailContract": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "sendEmailId": {
             "type": "integer",
             "format": "int64"
           },
@@ -1539,7 +1935,7 @@
           }
         }
       },
-      "SendEmailContract": {
+      "QueueEmailContract": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1548,15 +1944,93 @@
             "format": "int64"
           },
           "emailServerId": {
-            "type": "string",
-            "nullable": true
+            "type": "integer",
+            "format": "int64"
           },
           "fromEmailId": {
-            "type": "string",
-            "nullable": true
+            "type": "integer",
+            "format": "int64"
           },
           "status": {
             "$ref": "#/components/schemas/EmailStatusType"
+          },
+          "uniqueIdentity": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDateTime": {
+            "title": "Nullable<DateTime>",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedDateTime": {
+            "title": "Nullable<DateTime>",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "QueueEmailContractListMessageContract": {
+        "title": "MessageContract<List`1>",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorContract"
+          },
+          "result": {
+            "title": "List<QueueEmailContract>",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/QueueEmailContract"
+            }
+          }
+        }
+      },
+      "QueueEmailContractMessageContract": {
+        "title": "MessageContract<QueueEmailContract>",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorContract"
+          },
+          "result": {
+            "$ref": "#/components/schemas/QueueEmailContract"
+          }
+        }
+      },
+      "SendEmailContract": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "queueEmailId": {
+            "type": "integer",
+            "format": "int64"
           },
           "uniqueIdentity": {
             "type": "string",
@@ -1633,10 +2107,6 @@
             "format": "email",
             "nullable": true
           },
-          "sendEmailId": {
-            "type": "integer",
-            "format": "int64"
-          },
           "uniqueIdentity": {
             "type": "string",
             "nullable": true
@@ -1676,7 +2146,7 @@
           }
         }
       },
-      "UpdateSendEmailRequestContract": {
+      "UpdateQueueEmailRequestContract": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1688,8 +2158,35 @@
             "type": "integer",
             "format": "int64"
           },
+          "fromEmailId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "status": {
             "$ref": "#/components/schemas/EmailStatusType"
+          },
+          "uniqueIdentity": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UpdateSendEmailRequestContract": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "emailAddress": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "queueEmailId": {
+            "type": "integer",
+            "format": "int64"
           },
           "uniqueIdentity": {
             "type": "string",
