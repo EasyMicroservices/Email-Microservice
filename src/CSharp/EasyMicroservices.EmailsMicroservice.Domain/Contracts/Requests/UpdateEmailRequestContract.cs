@@ -12,7 +12,7 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
         public long Id { get; set; }
         [EmailAddress]
         public string Address { get; set; }
-        public long SendEmailId { get; set; }
+        public long QueueEmailId { get; set; }
 
         public string UniqueIdentity { get; set; }
     }
