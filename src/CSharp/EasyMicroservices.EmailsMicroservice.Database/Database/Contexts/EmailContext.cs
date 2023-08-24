@@ -58,9 +58,6 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
                 .WithMany(x => x.SendEmails)
                 .HasForeignKey(x => x.QueueEmailId);
 
-                model.HasOne(x => x.Emails)
-                .WithMany(x => x.SendEmails)
-                .HasForeignKey(x => x.EmailId);
             });
         }
     }
