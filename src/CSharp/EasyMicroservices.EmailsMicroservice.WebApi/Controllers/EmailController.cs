@@ -15,26 +15,26 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
     public class EmailController : SimpleQueryServiceController<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>
     {
         private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _contractlogic;
-        private readonly IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> _sendEmaillogic;
+        private readonly IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> _QueueEmaillogic;
 
-        public EmailController(IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> sendEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> contractlogic) : base(contractlogic)
+        public EmailController(IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> contractlogic) : base(contractlogic)
         {
             _contractlogic = contractlogic;
-            _sendEmaillogic = sendEmaillogic;
+            _QueueEmaillogic = QueueEmaillogic;
         }
         public override async Task<MessageContract<long>> Add(CreateEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var checkSendemailId = await _sendEmaillogic.GetById(new GetIdRequestContract<long>() { Id = request.SendEmailId });;
-            if (checkSendemailId.IsSuccess)
+            var checkQueueEmailId = await _QueueEmaillogic.GetById(new GetIdRequestContract<long>() { Id = request.QueueEmailId });;
+            if (checkQueueEmailId.IsSuccess)
                 return await base.Add(request, cancellationToken);
-            return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "SendemailId is incorrect");
+            return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueEmailId is incorrect");
         }
         public override async Task<MessageContract<EmailContract>> Update(UpdateEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var checkSendemailId = await _sendEmaillogic.GetById(new GetIdRequestContract<long>() { Id = request.SendEmailId });
-            if (checkSendemailId.IsSuccess)
+            var checkQueueEmailId = await _QueueEmaillogic.GetById(new GetIdRequestContract<long>() { Id = request.QueueEmailId });
+            if (checkQueueEmailId.IsSuccess)
                 return await base.Update(request, cancellationToken);
-            return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "SendemailId is incorrect");
+            return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueEmailId is incorrect");
 
         }
 
