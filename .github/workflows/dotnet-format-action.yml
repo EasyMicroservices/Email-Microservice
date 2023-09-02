@@ -20,10 +20,10 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           action: "fix"
-          workspace: "./src/CSharp/EasyMicroservices.ContentsMicroservice.sln"
+          workspace: "./src/CSharp/EasyMicroservices.EmailsMicroservice.sln"
       - name: Test
         run:  |
-          dotnet test ./src/CSharp/EasyMicroservices.ContentsMicroservice.sln -f net7.0
+          dotnet test ./src/CSharp/EasyMicroservices.EmailsMicroservice.sln -f net7.0
       - name: Commit files
         if: steps.format.outputs.has-changes == 'true'
         uses: EndBug/add-and-commit@v4.1.0
