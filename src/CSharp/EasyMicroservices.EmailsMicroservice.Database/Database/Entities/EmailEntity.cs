@@ -9,5 +9,5 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Entities
         public long Id { get; set; }
         public ICollection<QueueEmailEntity> QueueEmails { get; set; }
         public ICollection<SendEmailEntity> SendEmails { get; set; }
-     }
+    }
 }

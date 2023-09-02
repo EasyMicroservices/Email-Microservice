@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Schemas
 {
-    public class SendEmailSchema  : IUniqueIdentitySchema, IDateTimeSchema, ISoftDeleteSchema
+    public class SendEmailSchema : IUniqueIdentitySchema, IDateTimeSchema, ISoftDeleteSchema
     {
         public string UniqueIdentity { get; set; }
         public string EmailAddress { get; set; }
