@@ -7,6 +7,9 @@ using EasyMicroservices.ServiceContracts;
 using EasyMicroservices.Cores.Contracts.Requests;
 using EasyMicroservices.EmailsMicroservice.DataTypes;
 using Microsoft.AspNetCore.Mvc;
+using Castle.Components.DictionaryAdapter;
+using EasyMicroservices.Cores.Database.Managers;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
@@ -17,6 +20,13 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         public EmailController(IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> contractlogic) : base(contractlogic)
         {
             _contractlogic = contractlogic;
+        }
+
+        [HttpPost]
+        public async Task<MessageContract<EmailContract>> FindByAddress(FindEmailByAddressRequestContract request) 
+        {
+            var decodedUniqueIdentity = DefaultUniqueIdentityManager.DecodeUniqueIdentity(request.UniqueIdentity);
+            return await _contractlogic.GetBy(o => o.Address.Contains(request.EmailAddress) && DefaultUniqueIdentityManager.CutUniqueIdentity(o.UniqueIdentity, decodedUniqueIdentity.Count()) == request.UniqueIdentity);
         }
     }
 }
