@@ -65,6 +65,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                     Id = checkQueueId.Result.Id,
                     Status = EmailStatusType.Sent,
                     EmailServerId = checkQueueId.Result.EmailServerId,
+                    FromEmailId = checkQueueId.Result.FromEmailId,
                     UniqueIdentity = checkQueueId.Result.UniqueIdentity
                 });
             }
@@ -76,7 +77,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                     Id = checkQueueId.Result.Id,
                     Status = EmailStatusType.Canceled,
                     EmailServerId = checkQueueId.Result.EmailServerId,
-                    UniqueIdentity = checkQueueId.Result.UniqueIdentity
+                    UniqueIdentity = checkQueueId.Result.UniqueIdentity,
+                    FromEmailId = checkQueueId.Result.FromEmailId
                 });
             }
             return await base.Add(request, cancellationToken);

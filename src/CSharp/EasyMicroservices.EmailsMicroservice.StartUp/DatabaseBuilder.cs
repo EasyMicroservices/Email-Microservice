@@ -17,8 +17,8 @@ namespace EasyMicroservices.EmailsMicroservice
 
         public void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("EmailDatabase");
-            //optionsBuilder.UseSqlServer(config.GetConnectionString("local"));
+            //optionsBuilder.UseInMemoryDatabase("EmailDatabase");
+            optionsBuilder.UseSqlServer(config.GetConnectionString("local"));
         }
     }
 }

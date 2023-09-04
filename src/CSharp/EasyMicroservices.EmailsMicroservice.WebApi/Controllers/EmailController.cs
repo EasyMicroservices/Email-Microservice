@@ -26,7 +26,14 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         public async Task<MessageContract<EmailContract>> FindByAddress(FindEmailByAddressRequestContract request)
         {
             var decodedUniqueIdentity = DefaultUniqueIdentityManager.DecodeUniqueIdentity(request.UniqueIdentity);
-            return await _contractlogic.GetBy(o => o.Address.Contains(request.EmailAddress) && DefaultUniqueIdentityManager.CutUniqueIdentity(o.UniqueIdentity, decodedUniqueIdentity.Count()) == request.UniqueIdentity);
+
+            var emails = await _contractlogic.GetAll(query => query.Where(o => o.Address.Contains(request.EmailAddress)));
+
+            var filteredEmail = emails.Result
+                .Where(o => DefaultUniqueIdentityManager.CutUniqueIdentity(o.UniqueIdentity, decodedUniqueIdentity.Count()) == request.UniqueIdentity)
+                .FirstOrDefault();
+
+            return filteredEmail;
         }
     }
 }
