@@ -5,8 +5,8 @@ using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
 using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using EasyMicroservices.EmailsMicroservice.DataTypes;
 using EasyMicroservices.ServiceContracts;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
@@ -24,10 +24,12 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
             _emailserverlogic = emailserverlogic;
             _QueueEmaillogic = QueueEmaillogic;
         }
+
+        static HttpClient HttpClient = new HttpClient();
         public override async Task<MessageContract<long>> Add(CreateSendEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var checkQueueId = await _QueueEmaillogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long>() { Id = request.QueueEmailId });
-            if (!checkQueueId.IsSuccess)
+            var checkQueueId = await _QueueEmaillogic.GetBy(x => true);
+            if (!checkQueueId)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueId is incorrect");
             var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.EmailServerId });
             if (!EmailServer.IsSuccess)
@@ -55,6 +57,21 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 Body = request.Body,
                 IsBodyHtml = false, // You can set this to false if you're sending plain text
             };
+
+            if (!request.AttachmentFilesUrls.IsNullOrEmpty())
+            {
+                foreach (var attachUrl in request.AttachmentFilesUrls)
+                {
+                    var response = await HttpClient.GetAsync(attachUrl);
+                    var fileName = response.Content.Headers.ContentDisposition.FileName;
+                    var fileBiteArr = await response.Content
+                                            .ReadAsByteArrayAsync()
+                                            .ConfigureAwait(false);
+                    var memoryStream = new MemoryStream(fileBiteArr);
+                    message.Attachments.Add(new Attachment(memoryStream, fileName ?? "attactment"));
+                }
+            }
+
             message.To.Add(request.EmailAddress); // Recipient's email address
 
             try
