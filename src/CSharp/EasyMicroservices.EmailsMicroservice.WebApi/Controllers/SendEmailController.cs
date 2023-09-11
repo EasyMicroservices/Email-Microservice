@@ -17,7 +17,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _emaillogic;
         private readonly IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> _QueueEmaillogic;
         private readonly IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailserverlogic;
-        public SendEmailController(IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> emaillogic, IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> emailserverlogic ,  IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> contractlogic) : base(contractlogic)
+        public SendEmailController(IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> emaillogic, IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> emailserverlogic, IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> contractlogic) : base(contractlogic)
         {
             _contractlogic = contractlogic;
             _emaillogic = emaillogic;
@@ -26,7 +26,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         }
         public override async Task<MessageContract<long>> Add(CreateSendEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var checkQueueId = await _QueueEmaillogic.GetById( new Cores.Contracts.Requests.GetIdRequestContract<long>() { Id = request.QueueEmailId});
+            var checkQueueId = await _QueueEmaillogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long>() { Id = request.QueueEmailId });
             if (!checkQueueId.IsSuccess)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueId is incorrect");
             var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.EmailServerId });
@@ -65,6 +65,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                     Id = checkQueueId.Result.Id,
                     Status = EmailStatusType.Sent,
                     EmailServerId = checkQueueId.Result.EmailServerId,
+                    FromEmailId = checkQueueId.Result.FromEmailId,
                     UniqueIdentity = checkQueueId.Result.UniqueIdentity
                 });
             }
@@ -76,7 +77,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                     Id = checkQueueId.Result.Id,
                     Status = EmailStatusType.Canceled,
                     EmailServerId = checkQueueId.Result.EmailServerId,
-                    UniqueIdentity = checkQueueId.Result.UniqueIdentity
+                    UniqueIdentity = checkQueueId.Result.UniqueIdentity,
+                    FromEmailId = checkQueueId.Result.FromEmailId
                 });
             }
             return await base.Add(request, cancellationToken);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Entities
 {
-    public class SendEmailEntity : SendEmailSchema , IIdSchema<long>
+    public class SendEmailEntity : SendEmailSchema, IIdSchema<long>
     {
         public long Id { get; set; }
         public long QueueEmailId { get; set; }

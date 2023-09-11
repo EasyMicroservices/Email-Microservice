@@ -53,7 +53,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract>());
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract>());
             builder.Services.AddScoped<IDatabaseBuilder>(serviceProvider => new DatabaseBuilder());
-   
+
             builder.Services.AddScoped<IDependencyManager>(service => new DependencyManager());
             builder.Services.AddScoped(service => new WhiteLabelManager(service, service.GetService<IDependencyManager>()));
             builder.Services.AddTransient(serviceProvider => new EmailContext(serviceProvider.GetService<IDatabaseBuilder>()));
@@ -90,7 +90,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             await startUp.Run(new DependencyManager());
             app.Run();
         }
-        
+
         static void CreateDatabase()
         {
             using (var context = new EmailContext(new DatabaseBuilder()))
