@@ -5,55 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Email/FindByAddress": {
-      "post": {
-        "tags": [
-          "Email"
-        ],
-        "operationId": "FindByAddress",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EmailContractMessageContract"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Email/Add": {
       "post": {
         "tags": [
@@ -1819,10 +1770,6 @@
             "format": "email",
             "nullable": true
           },
-          "queueEmailId": {
-            "type": "integer",
-            "format": "int64"
-          },
           "uniqueIdentity": {
             "type": "string",
             "nullable": true
@@ -1834,6 +1781,14 @@
           "body": {
             "type": "string",
             "nullable": true
+          },
+          "attachmentFilesUrls": {
+            "title": "List<String>",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -2210,20 +2165,6 @@
           }
         }
       },
-      "FindEmailByAddressRequestContract": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "uniqueIdentity": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "GetUniqueIdentityRequestContract": {
         "type": "object",
         "additionalProperties": false,
@@ -2493,6 +2434,10 @@
             "nullable": true
           },
           "methodName": {
+            "type": "string",
+            "nullable": true
+          },
+          "path": {
             "type": "string",
             "nullable": true
           },
