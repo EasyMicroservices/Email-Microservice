@@ -11,5 +11,6 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
         public string Subject { get; set; }
         public string Body { get; set; }
         public List<string> AttachmentFilesUrls { get; set; }
+        public List<string> CC { get; set; }
     }
 }
