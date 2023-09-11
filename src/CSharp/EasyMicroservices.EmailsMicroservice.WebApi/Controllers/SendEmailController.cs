@@ -72,6 +72,14 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 }
             }
 
+            if (!request.CC.IsNullOrEmpty())
+            {
+                foreach (var cc in request.CC)
+                {
+                    message.CC.Add(cc);
+                }
+            }
+
             message.To.Add(request.EmailAddress); // Recipient's email address
 
             try

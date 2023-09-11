@@ -1838,6 +1838,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "cc": {
+            "title": "List<String>",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

@@ -3682,6 +3682,7 @@ namespace Emails.GeneratedServices
         private string _subject;
         private string _body;
         private System.Collections.Generic.ICollection<string> _attachmentFilesUrls;
+        private System.Collections.Generic.ICollection<string> _cc;
 
         [Newtonsoft.Json.JsonProperty("emailAddress", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string EmailAddress
@@ -3753,6 +3754,21 @@ namespace Emails.GeneratedServices
                 if (_attachmentFilesUrls != value)
                 {
                     _attachmentFilesUrls = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("cc", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> Cc
+        {
+            get { return _cc; }
+
+            set
+            {
+                if (_cc != value)
+                {
+                    _cc = value;
                     RaisePropertyChanged();
                 }
             }
