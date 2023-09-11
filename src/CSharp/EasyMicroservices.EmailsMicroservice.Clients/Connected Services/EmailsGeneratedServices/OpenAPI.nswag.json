@@ -54,6 +54,55 @@
         }
       }
     },
+    "/api/Email/FindByAddress": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "operationId": "FindByAddress",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindEmailByAddressRequestContract"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailContractMessageContract"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Email/Update": {
       "put": {
         "tags": [
@@ -2162,6 +2211,20 @@
           },
           "isDescending": {
             "type": "boolean"
+          }
+        }
+      },
+      "FindEmailByAddressRequestContract": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqueIdentity": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
