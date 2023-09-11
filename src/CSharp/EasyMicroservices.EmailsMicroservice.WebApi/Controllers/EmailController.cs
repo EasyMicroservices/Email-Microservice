@@ -1,15 +1,11 @@
 ﻿using EasyMicroservices.Cores.AspCoreApi;
 using EasyMicroservices.Cores.Database.Interfaces;
-using EasyMicroservices.EmailsMicroservice.Contracts.Common;
-using EasyMicroservices.EmailsMicroservice.Database.Entities;
-using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
-using EasyMicroservices.ServiceContracts;
-using EasyMicroservices.Cores.Contracts.Requests;
-using EasyMicroservices.EmailsMicroservice.DataTypes;
-using Microsoft.AspNetCore.Mvc;
-using Castle.Components.DictionaryAdapter;
 using EasyMicroservices.Cores.Database.Managers;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+using EasyMicroservices.EmailsMicroservice.Contracts.Common;
+using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
+using EasyMicroservices.EmailsMicroservice.Database.Entities;
+using EasyMicroservices.ServiceContracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
@@ -20,6 +16,15 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         public EmailController(IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> contractlogic) : base(contractlogic)
         {
             _contractlogic = contractlogic;
+        }
+
+        [HttpPost]
+        public override async Task<MessageContract<long>> Add(CreateEmailRequestContract request, CancellationToken cancellationToken = default)
+        {
+            var find = await _contractlogic.GetBy(x => x.Address == request.Address);
+            if (!find)
+                return await base.Add(request, cancellationToken);
+            return find.Result.Id;
         }
 
         [HttpPost]

@@ -74,13 +74,13 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             app.MapControllers();
 
 
-            //CreateDatabase();
+            CreateDatabase();
 
             using (var scope = app.Services.CreateScope())
             {
                 using var context = scope.ServiceProvider.GetService<EmailContext>();
                 //await context.Database.EnsureCreatedAsync();
-                //await context.Database.MigrateAsync();
+                await context.Database.MigrateAsync();
                 await context.DisposeAsync();
                 var service = scope.ServiceProvider.GetService<WhiteLabelManager>();
                 await service.Initialize("Email", config.GetValue<string>("RootAddresses:WhiteLabel"), typeof(EmailContext));

@@ -1,10 +1,8 @@
 ﻿using EasyMicroservices.Cores.AspCoreApi;
 using EasyMicroservices.Cores.Database.Interfaces;
 using EasyMicroservices.EmailsMicroservice.Contracts.Common;
-using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
-using EasyMicroservices.ServiceContracts;
-using Abp.Runtime.Security;
+using EasyMicroservices.EmailsMicroservice.Database.Entities;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
