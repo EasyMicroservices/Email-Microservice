@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasyMicroservices.EmailsMicroservice.DataTypes
+﻿namespace EasyMicroservices.EmailsMicroservice.DataTypes
 {
-    public enum EmailStatusType
+    public enum QueueStatusType
     {
         /// <summary>
         /// value is none, Never use the None to return values
@@ -32,11 +26,11 @@ namespace EasyMicroservices.EmailsMicroservice.DataTypes
         /// there is nothing to show or validate error
         /// </summary>
         Nothing = 5,
-        Queue = 6,
-        Sending = 7,
-        Sent = 8,
-        Exception = 9,
-        Canceled = 10,
-
+        Created = 6,
+        Queue = 7,
+        Sending = 8,
+        Sent = 9,
+        Exception = 10,
+        Canceled = 11,
     }
 }

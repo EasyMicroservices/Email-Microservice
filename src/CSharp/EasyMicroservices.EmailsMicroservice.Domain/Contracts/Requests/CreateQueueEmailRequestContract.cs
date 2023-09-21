@@ -11,7 +11,7 @@ namespace EasyMicroservices.EmailsMicroservice.Contracts.Requests
     {
         public long EmailServerId { get; set; }
         public long FromEmailId { get; set; }
-        public EmailStatusType Status { get; set; }
+        public QueueStatusType Status { get; set; }
         public string UniqueIdentity { get; set; }
 
     }

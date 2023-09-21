@@ -1,13 +1,12 @@
 ﻿using EasyMicroservices.Cores.Interfaces;
-using EasyMicroservices.EmailMicroservice.Database.Schemas;
+using EasyMicroservices.EmailsMicroservice.Database.Schemas;
 using System.Collections.Generic;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Entities
 {
-    public class EmailEntity : EmailSchema, IIdSchema<long>
+    public class ServerEntity : ServerSchema, IIdSchema<long>
     {
         public long Id { get; set; }
         public ICollection<QueueEntity> Queues { get; set; }
-        public ICollection<SendEmailEntity> SendEmails { get; set; }
     }
 }

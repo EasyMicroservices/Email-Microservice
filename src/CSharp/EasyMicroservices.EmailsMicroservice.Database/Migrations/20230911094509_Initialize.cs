@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EasyMicroservices.EmailsMicroservice.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstInitialize : Migration
+    public partial class Initialize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,7 +57,7 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmailServerId = table.Column<long>(type: "bigint", nullable: false),
+                    ServerId = table.Column<long>(type: "bigint", nullable: false),
                     FromEmailId = table.Column<long>(type: "bigint", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     UniqueIdentity = table.Column<string>(type: "nvarchar(450)", nullable: true, collation: "SQL_Latin1_General_CP1_CS_AS"),
@@ -70,8 +70,8 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 {
                     table.PrimaryKey("PK_QueueEmails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QueueEmails_EmailServers_EmailServerId",
-                        column: x => x.EmailServerId,
+                        name: "FK_QueueEmails_EmailServers_ServerId",
+                        column: x => x.ServerId,
                         principalTable: "EmailServers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -89,7 +89,7 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QueueEmailId = table.Column<long>(type: "bigint", nullable: false),
+                    QueueId = table.Column<long>(type: "bigint", nullable: false),
                     EmailEntityId = table.Column<long>(type: "bigint", nullable: true),
                     UniqueIdentity = table.Column<string>(type: "nvarchar(450)", nullable: true, collation: "SQL_Latin1_General_CP1_CS_AS"),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -107,8 +107,8 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                         principalTable: "Emails",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SendEmails_QueueEmails_QueueEmailId",
-                        column: x => x.QueueEmailId,
+                        name: "FK_SendEmails_QueueEmails_QueueId",
+                        column: x => x.QueueId,
                         principalTable: "QueueEmails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -175,11 +175,6 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 column: "DeletedDateTime");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QueueEmails_EmailServerId",
-                table: "QueueEmails",
-                column: "EmailServerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_QueueEmails_FromEmailId",
                 table: "QueueEmails",
                 column: "FromEmailId");
@@ -193,6 +188,11 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 name: "IX_QueueEmails_ModificationDateTime",
                 table: "QueueEmails",
                 column: "ModificationDateTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QueueEmails_ServerId",
+                table: "QueueEmails",
+                column: "ServerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QueueEmails_UniqueIdentity",
@@ -225,9 +225,9 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                 column: "ModificationDateTime");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SendEmails_QueueEmailId",
+                name: "IX_SendEmails_QueueId",
                 table: "SendEmails",
-                column: "QueueEmailId");
+                column: "QueueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SendEmails_UniqueIdentity",
