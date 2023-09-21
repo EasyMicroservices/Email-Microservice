@@ -6,8 +6,8 @@ using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using EasyMicroservices.EmailsMicroservice.DataTypes;
 using EasyMicroservices.ServiceContracts;
 using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
+using System.Text;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
@@ -15,9 +15,9 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
     {
         private readonly IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> _contractlogic;
         private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _emaillogic;
-        private readonly IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> _QueueEmaillogic;
-        private readonly IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailserverlogic;
-        public SendEmailController(IContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> emaillogic, IContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> emailserverlogic, IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> contractlogic) : base(contractlogic)
+        private readonly IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> _QueueEmaillogic;
+        private readonly IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailserverlogic;
+        public SendEmailController(IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> emaillogic, IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> emailserverlogic, IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> contractlogic) : base(contractlogic)
         {
             _contractlogic = contractlogic;
             _emaillogic = emaillogic;
@@ -31,7 +31,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
             var checkQueueId = await _QueueEmaillogic.GetBy(x => true);
             if (!checkQueueId)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueId is incorrect");
-            var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.EmailServerId });
+            var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.ServerId });
             if (!EmailServer.IsSuccess)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "EmailServerId  is incorrect");
             var Email = await _emaillogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.FromEmailId });
@@ -43,7 +43,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
             {
                 Host = EmailServer.Result.Address,          // Your SMTP server
                 Port = EmailServer.Result.Port,                         // Port number
-                EnableSsl = false,                   // Use SSL
+                EnableSsl = EmailServer.Result.IsSSL,                   // Use SSL
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(EmailServer.Result.Username, EmailServer.Result.Password) // Your SMTP credentials
@@ -55,7 +55,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 From = new MailAddress(SenderEmail), // Sender's email address
                 Subject = request.Subject,
                 Body = request.Body,
-                IsBodyHtml = false, // You can set this to false if you're sending plain text
+                IsBodyHtml = request.Body.Contains("<html", StringComparison.OrdinalIgnoreCase), // You can set this to false if you're sending plain text
             };
 
             if (!request.AttachmentFilesUrls.IsNullOrEmpty())
@@ -63,11 +63,13 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 foreach (var attachUrl in request.AttachmentFilesUrls)
                 {
                     var response = await HttpClient.GetAsync(attachUrl);
-                    var fileName = response.Content.Headers.ContentDisposition.FileName;
+                    var fileName = response.Content.Headers.ContentDisposition?.FileName;
                     var fileBiteArr = await response.Content
                                             .ReadAsByteArrayAsync()
                                             .ConfigureAwait(false);
                     var memoryStream = new MemoryStream(fileBiteArr);
+                    if (!fileName.HasValue())
+                        fileName = Path.GetFileName(attachUrl);
                     message.Attachments.Add(new Attachment(memoryStream, fileName ?? "attactment"));
                 }
             }
@@ -88,8 +90,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 await _QueueEmaillogic.Update(new UpdateQueueEmailRequestContract()
                 {
                     Id = checkQueueId.Result.Id,
-                    Status = EmailStatusType.Sent,
-                    EmailServerId = checkQueueId.Result.EmailServerId,
+                    Status = QueueStatusType.Sent,
+                    ServerId = checkQueueId.Result.ServerId,
                     FromEmailId = checkQueueId.Result.FromEmailId,
                     UniqueIdentity = checkQueueId.Result.UniqueIdentity
                 });
@@ -100,13 +102,19 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 await _QueueEmaillogic.Update(new UpdateQueueEmailRequestContract()
                 {
                     Id = checkQueueId.Result.Id,
-                    Status = EmailStatusType.Canceled,
-                    EmailServerId = checkQueueId.Result.EmailServerId,
+                    Status = QueueStatusType.Canceled,
+                    ServerId = checkQueueId.Result.ServerId,
                     UniqueIdentity = checkQueueId.Result.UniqueIdentity,
                     FromEmailId = checkQueueId.Result.FromEmailId
                 });
             }
-            return await base.Add(request, cancellationToken);
+            var addResult = await _QueueEmaillogic.AddEntity(new QueueEntity()
+            {
+                FromEmailId = checkQueueId.Result.FromEmailId,
+                ServerId = checkQueueId.Result.ServerId,
+                Status = QueueStatusType.Sent,
+            }, cancellationToken);
+            return addResult.GetCheckedResult().Id;
         }
     }
 }

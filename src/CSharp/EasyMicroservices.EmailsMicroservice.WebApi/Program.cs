@@ -49,8 +49,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract>());
-            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<EmailServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract>());
-            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<QueueEmailEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, QueueEmailContract>());
+            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract>());
+            builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract>());
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract>());
             builder.Services.AddScoped<IDatabaseBuilder>(serviceProvider => new DatabaseBuilder());
 
