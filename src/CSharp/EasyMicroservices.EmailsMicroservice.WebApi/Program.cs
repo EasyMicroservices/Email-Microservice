@@ -52,7 +52,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract>());
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract>());
             builder.Services.AddScoped((serviceProvider) => new DependencyManager().GetContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract>());
-            builder.Services.AddScoped<IDatabaseBuilder>(serviceProvider => new DatabaseBuilder());
+            builder.Services.AddScoped<IDatabaseBuilder>(serviceProvider => new DatabaseBuilder(config));
 
             builder.Services.AddScoped<IDependencyManager>(service => new DependencyManager());
             builder.Services.AddScoped(service => new WhiteLabelManager(service, service.GetService<IDependencyManager>()));
@@ -74,13 +74,13 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             app.MapControllers();
 
 
-            CreateDatabase();
+            //CreateDatabase();
 
             using (var scope = app.Services.CreateScope())
             {
                 using var context = scope.ServiceProvider.GetService<EmailContext>();
-                //await context.Database.EnsureCreatedAsync();
-                await context.Database.MigrateAsync();
+                await context.Database.EnsureCreatedAsync();
+                //await context.Database.MigrateAsync();
                 await context.DisposeAsync();
                 var service = scope.ServiceProvider.GetService<WhiteLabelManager>();
                 await service.Initialize("Email", config.GetValue<string>("RootAddresses:WhiteLabel"), typeof(EmailContext));
@@ -93,7 +93,9 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
 
         static void CreateDatabase()
         {
-            using (var context = new EmailContext(new DatabaseBuilder()))
+            var _config = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+
+            using (var context = new EmailContext(new DatabaseBuilder(_config)))
             {
                 if (context.Database.EnsureCreated())
                 {
