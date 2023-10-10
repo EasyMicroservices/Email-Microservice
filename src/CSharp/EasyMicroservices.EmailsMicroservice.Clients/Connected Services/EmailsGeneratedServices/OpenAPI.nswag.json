@@ -978,17 +978,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               }
             }
@@ -1125,17 +1125,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               }
             }
@@ -1174,17 +1174,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractMessageContract"
                 }
               }
             }
@@ -1223,17 +1223,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               }
             }
@@ -1253,17 +1253,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               }
             }
@@ -1302,17 +1302,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueueEmailContractListMessageContract"
+                  "$ref": "#/components/schemas/EmailQueueContractListMessageContract"
                 }
               }
             }
@@ -1793,7 +1793,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "emailServerId": {
+          "serverId": {
             "type": "integer",
             "format": "int64"
           },
@@ -1802,7 +1802,7 @@
             "format": "int64"
           },
           "status": {
-            "$ref": "#/components/schemas/EmailStatusType"
+            "$ref": "#/components/schemas/QueueStatusType"
           },
           "uniqueIdentity": {
             "type": "string",
@@ -1933,6 +1933,97 @@
           }
         }
       },
+      "EmailQueueContract": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "serverId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fromEmailId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "$ref": "#/components/schemas/QueueStatusType"
+          },
+          "uniqueIdentity": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDateTime": {
+            "title": "Nullable<DateTime>",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deletedDateTime": {
+            "title": "Nullable<DateTime>",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EmailQueueContractListMessageContract": {
+        "title": "ListMessageContract<EmailQueueContract>",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorContract"
+          },
+          "success": {
+            "$ref": "#/components/schemas/SuccessContract"
+          },
+          "result": {
+            "title": "List<EmailQueueContract>",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EmailQueueContract"
+            }
+          },
+          "hasItems": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        }
+      },
+      "EmailQueueContractMessageContract": {
+        "title": "MessageContract<EmailQueueContract>",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ErrorContract"
+          },
+          "success": {
+            "$ref": "#/components/schemas/SuccessContract"
+          },
+          "result": {
+            "$ref": "#/components/schemas/EmailQueueContract"
+          }
+        }
+      },
       "EmailServerContract": {
         "type": "object",
         "additionalProperties": false,
@@ -2031,36 +2122,6 @@
             "$ref": "#/components/schemas/EmailServerContract"
           }
         }
-      },
-      "EmailStatusType": {
-        "type": "integer",
-        "format": "int32",
-        "x-enumNames": [
-          "None",
-          "Default",
-          "All",
-          "Other",
-          "Unknown",
-          "Nothing",
-          "Queue",
-          "Sending",
-          "Sent",
-          "Exception",
-          "Canceled"
-        ],
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10
-        ]
       },
       "ErrorContract": {
         "type": "object",
@@ -2317,96 +2378,37 @@
           }
         }
       },
-      "QueueEmailContract": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "emailServerId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "fromEmailId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "status": {
-            "$ref": "#/components/schemas/EmailStatusType"
-          },
-          "uniqueIdentity": {
-            "type": "string",
-            "nullable": true
-          },
-          "creationDateTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modificationDateTime": {
-            "title": "Nullable<DateTime>",
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "deletedDateTime": {
-            "title": "Nullable<DateTime>",
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "isDeleted": {
-            "type": "boolean"
-          }
-        }
-      },
-      "QueueEmailContractListMessageContract": {
-        "title": "ListMessageContract<QueueEmailContract>",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "isSuccess": {
-            "type": "boolean"
-          },
-          "error": {
-            "$ref": "#/components/schemas/ErrorContract"
-          },
-          "success": {
-            "$ref": "#/components/schemas/SuccessContract"
-          },
-          "result": {
-            "title": "List<QueueEmailContract>",
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/QueueEmailContract"
-            }
-          },
-          "hasItems": {
-            "type": "boolean",
-            "readOnly": true
-          }
-        }
-      },
-      "QueueEmailContractMessageContract": {
-        "title": "MessageContract<QueueEmailContract>",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "isSuccess": {
-            "type": "boolean"
-          },
-          "error": {
-            "$ref": "#/components/schemas/ErrorContract"
-          },
-          "success": {
-            "$ref": "#/components/schemas/SuccessContract"
-          },
-          "result": {
-            "$ref": "#/components/schemas/QueueEmailContract"
-          }
-        }
+      "QueueStatusType": {
+        "type": "integer",
+        "format": "int32",
+        "x-enumNames": [
+          "None",
+          "Default",
+          "All",
+          "Other",
+          "Unknown",
+          "Nothing",
+          "Created",
+          "Queue",
+          "Sending",
+          "Sent",
+          "Exception",
+          "Canceled"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
       },
       "SendEmailContract": {
         "type": "object",
@@ -2588,7 +2590,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "emailServerId": {
+          "serverId": {
             "type": "integer",
             "format": "int64"
           },
@@ -2597,7 +2599,7 @@
             "format": "int64"
           },
           "status": {
-            "$ref": "#/components/schemas/EmailStatusType"
+            "$ref": "#/components/schemas/QueueStatusType"
           },
           "uniqueIdentity": {
             "type": "string",
