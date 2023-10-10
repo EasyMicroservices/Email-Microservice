@@ -82,7 +82,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             using (var scope = app.Services.CreateScope())
             {
                 using var context = scope.ServiceProvider.GetService<EmailContext>();
-                await context.Database.EnsureCreatedAsync();
+                //await context.Database.EnsureCreatedAsync();
                 //await context.Database.MigrateAsync();
                 await context.DisposeAsync();
                 var service = scope.ServiceProvider.GetService<WhiteLabelManager>();

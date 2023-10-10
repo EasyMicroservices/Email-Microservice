@@ -32,7 +32,6 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         }
         public override async Task<MessageContract<long>> Add(CreateQueueEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            request.ServerId = 1;
             var emailserverId = await _emailserverlogic.GetById(new GetIdRequestContract<long>() { Id = request.ServerId });
             var checkEmailId = await _emailcontract.GetById(new GetIdRequestContract<long>() { Id = request.FromEmailId });
             if (emailserverId.IsSuccess && checkEmailId.IsSuccess)
