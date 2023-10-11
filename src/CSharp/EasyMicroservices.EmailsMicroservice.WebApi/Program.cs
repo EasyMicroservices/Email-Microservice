@@ -15,6 +15,7 @@ using EasyMicroservices.EmailsMicroservice.Interfaces;
 using EasyMicroservices.EmailsMicroservice;
 using EasyMicroservices.EmailsMicroservice.Contracts.Common;
 using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
+using EasyMicroservices.Cores.Relational.EntityFrameworkCore;
 
 namespace EasyMicroservices.EmailsMicroservice.WebApi
 {
@@ -57,6 +58,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             builder.Services.AddScoped<IDependencyManager>(service => new DependencyManager());
             builder.Services.AddScoped(service => new WhiteLabelManager(service, service.GetService<IDependencyManager>()));
             builder.Services.AddTransient(serviceProvider => new EmailContext(serviceProvider.GetService<IDatabaseBuilder>()));
+            //builder.Services.AddTransient<RelationalCoreContext>(serviceProvider => new EmailContext(serviceProvider.GetService<IDatabaseBuilder>()));
+
             //builder.Services.AddScoped<IFileManagerProvider>(serviceProvider => new FileManagerProvider());
             //builder.Services.AddScoped<IDirectoryManagerProvider, kc>();
 
@@ -79,7 +82,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
             using (var scope = app.Services.CreateScope())
             {
                 using var context = scope.ServiceProvider.GetService<EmailContext>();
-                await context.Database.EnsureCreatedAsync();
+                //await context.Database.EnsureCreatedAsync();
                 //await context.Database.MigrateAsync();
                 await context.DisposeAsync();
                 var service = scope.ServiceProvider.GetService<WhiteLabelManager>();

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EasyMicroservices.EmailsMicroservice.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialize : Migration
+    public partial class New : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

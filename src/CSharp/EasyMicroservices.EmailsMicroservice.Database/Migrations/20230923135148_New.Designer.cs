@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyMicroservices.EmailsMicroservice.Migrations
 {
     [DbContext(typeof(EmailContext))]
-    [Migration("20230911094509_Initialize")]
-    partial class Initialize
+    [Migration("20230923135148_New")]
+    partial class New
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
