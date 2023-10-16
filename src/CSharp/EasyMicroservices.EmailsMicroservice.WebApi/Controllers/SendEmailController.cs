@@ -30,13 +30,13 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         {
             var checkQueueId = await _QueueEmaillogic.GetBy(x => true);
             if (!checkQueueId)
-                return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueId is incorrect");
+                return checkQueueId.ToContract<long>();
             var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.ServerId });
             if (!EmailServer.IsSuccess)
-                return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "EmailServerId  is incorrect");
+                return EmailServer.ToContract<long>();
             var Email = await _emaillogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.FromEmailId });
             if (!Email.IsSuccess)
-                return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "FromEmailId  is incorrect");
+                return Email.ToContract<long>();
 
             // Configure SMTP client settings
             var smtpClient = new SmtpClient
