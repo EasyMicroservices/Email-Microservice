@@ -1,4 +1,5 @@
-﻿using EasyMicroservices.EmailsMicroservice.Database;
+﻿using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
+using EasyMicroservices.EmailsMicroservice.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EasyMicroservices.EmailsMicroservice
 {
-    public class DatabaseBuilder : IDatabaseBuilder
+    public class DatabaseBuilder : IEntityFrameworkCoreDatabaseBuilder
     {
         IConfiguration _configuration;
         public DatabaseBuilder(IConfiguration configuration)
