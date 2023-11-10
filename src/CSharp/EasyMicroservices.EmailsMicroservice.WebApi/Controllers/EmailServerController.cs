@@ -1,4 +1,5 @@
 ﻿using EasyMicroservices.Cores.AspCoreApi;
+using EasyMicroservices.Cores.AspEntityFrameworkCoreApi.Interfaces;
 using EasyMicroservices.Cores.Database.Interfaces;
 using EasyMicroservices.EmailsMicroservice.Contracts.Common;
 using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
@@ -8,10 +9,11 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
     public class EmailServerController : SimpleQueryServiceController<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long>
     {
-        private readonly IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _contractlogic;
-        public EmailServerController(IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> contractlogic) : base(contractlogic)
+        public IUnitOfWork unitOfWork;
+
+        public EmailServerController(IUnitOfWork uow) : base(uow)
         {
-            _contractlogic = contractlogic;
+            unitOfWork = uow;
         }
     }
 }

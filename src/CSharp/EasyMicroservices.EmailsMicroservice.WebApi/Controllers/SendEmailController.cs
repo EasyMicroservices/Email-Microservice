@@ -1,10 +1,12 @@
 ﻿using EasyMicroservices.Cores.AspCoreApi;
+using EasyMicroservices.Cores.AspEntityFrameworkCoreApi.Interfaces;
 using EasyMicroservices.Cores.Database.Interfaces;
 using EasyMicroservices.EmailsMicroservice.Contracts.Common;
 using EasyMicroservices.EmailsMicroservice.Contracts.Requests;
 using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using EasyMicroservices.EmailsMicroservice.DataTypes;
 using EasyMicroservices.ServiceContracts;
+using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -13,28 +15,32 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
     public class SendEmailController : SimpleQueryServiceController<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long>
     {
-        private readonly IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> _contractlogic;
-        private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _emaillogic;
-        private readonly IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> _QueueEmaillogic;
-        private readonly IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailserverlogic;
-        public SendEmailController(IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> QueueEmaillogic, IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> emaillogic, IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> emailserverlogic, IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> contractlogic) : base(contractlogic)
+        private readonly IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> _contractLogic;
+        private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _emailLogic;
+        private readonly IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> _queueEmailLogic;
+        private readonly IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailServerLogic;
+
+        public IUnitOfWork unitOfWork;
+
+        public SendEmailController(IUnitOfWork uow) : base(uow)
         {
-            _contractlogic = contractlogic;
-            _emaillogic = emaillogic;
-            _emailserverlogic = emailserverlogic;
-            _QueueEmaillogic = QueueEmaillogic;
+            unitOfWork = uow;
+            _contractLogic = uow.GetContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long>();
+            _emailLogic = uow.GetContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>();
+            _emailServerLogic = uow.GetContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long>();
+            _queueEmailLogic = uow.GetContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long>();
         }
 
         static HttpClient HttpClient = new HttpClient();
         public override async Task<MessageContract<long>> Add(CreateSendEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var checkQueueId = await _QueueEmaillogic.GetBy(x => true);
+            var checkQueueId = await _queueEmailLogic.GetBy(x => true);
             if (!checkQueueId)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "QueueId is incorrect");
-            var EmailServer = await _emailserverlogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.ServerId });
+            var EmailServer = await _emailServerLogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.ServerId });
             if (!EmailServer.IsSuccess)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "EmailServerId  is incorrect");
-            var Email = await _emaillogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.FromEmailId });
+            var Email = await _emailLogic.GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.Result.FromEmailId });
             if (!Email.IsSuccess)
                 return (EasyMicroservices.ServiceContracts.FailedReasonType.Empty, "FromEmailId  is incorrect");
 
@@ -87,7 +93,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
             try
             {
                 await smtpClient.SendMailAsync(message);
-                await _QueueEmaillogic.Update(new UpdateQueueEmailRequestContract()
+                await _queueEmailLogic.Update(new UpdateQueueEmailRequestContract()
                 {
                     Id = checkQueueId.Result.Id,
                     Status = QueueStatusType.Sent,
@@ -99,7 +105,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
             catch (SmtpFailedRecipientException ex)
             {
                 Console.WriteLine($"Error sending email: {ex.Message}");
-                await _QueueEmaillogic.Update(new UpdateQueueEmailRequestContract()
+                await _queueEmailLogic.Update(new UpdateQueueEmailRequestContract()
                 {
                     Id = checkQueueId.Result.Id,
                     Status = QueueStatusType.Canceled,
@@ -108,7 +114,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                     FromEmailId = checkQueueId.Result.FromEmailId
                 });
             }
-            var addResult = await _QueueEmaillogic.AddEntity(new QueueEntity()
+            var addResult = await _queueEmailLogic.AddEntity(new QueueEntity()
             {
                 FromEmailId = checkQueueId.Result.FromEmailId,
                 ServerId = checkQueueId.Result.ServerId,
