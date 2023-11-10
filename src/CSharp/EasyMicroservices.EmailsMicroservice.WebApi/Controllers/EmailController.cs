@@ -14,7 +14,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
     {
         public IUnitOfWork unitOfWork;
         public IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _contractLogic;
-    
+
         public EmailController(IUnitOfWork uow) : base(uow)
         {
             unitOfWork = uow;
