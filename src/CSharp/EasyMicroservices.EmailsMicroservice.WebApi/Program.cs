@@ -10,7 +10,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi
         public static async Task Main(string[] args)
         {
             var app = CreateBuilder(args);
-            var build = await app.Build<EmailContext>();
+            var build = await app.Build<EmailContext>(true);
             build.MapControllers();
             build.Run();
         }
