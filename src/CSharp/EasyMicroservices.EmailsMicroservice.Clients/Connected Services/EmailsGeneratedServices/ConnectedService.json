@@ -59,7 +59,7 @@
       "WrapResponseMethods": [],
       "GenerateResponseClasses": true,
       "ResponseClass": "SwaggerResponse",
-      "Namespace": "Emailss.GeneratedServices",
+      "Namespace": "Emails.GeneratedServices",
       "RequiredPropertiesMustBeDefined": true,
       "DateType": "System.DateTime",
       "JsonConverters": [],
