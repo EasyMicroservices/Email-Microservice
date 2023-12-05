@@ -1,28 +1,20 @@
-﻿using EasyMicroservices.EmailsMicroservice.Database.Entities;
-using EasyMicroservices.Cores.Relational.EntityFrameworkCore;
+﻿using EasyMicroservices.Cores.Relational.EntityFrameworkCore;
+using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
+using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
 {
     public class EmailContext : RelationalCoreContext
     {
-        IDatabaseBuilder _builder;
-        public EmailContext(IDatabaseBuilder builder)
+        public EmailContext(IEntityFrameworkCoreDatabaseBuilder builder) : base(builder)
         {
-            _builder = builder;
         }
+
         public DbSet<EmailEntity> Emails { get; set; }
         public DbSet<ServerEntity> EmailServers { get; set; }
         public DbSet<QueueEntity> QueueEmails { get; set; }
         public DbSet<SendEmailEntity> SendEmails { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (_builder != null)
-                _builder.OnConfiguring(optionsBuilder);
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,7 +49,6 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
                 model.HasOne(x => x.Queue)
                 .WithMany(x => x.SendEmails)
                 .HasForeignKey(x => x.QueueId);
-
             });
         }
     }
