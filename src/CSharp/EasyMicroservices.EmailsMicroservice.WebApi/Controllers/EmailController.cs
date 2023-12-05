@@ -13,7 +13,7 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
     public class EmailController : SimpleQueryServiceController<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>
     {
         readonly IUnitOfWork _unitOfWork;
-        public EmailController(IUnitOfWork  unitOfWork) : base(unitOfWork)
+        public EmailController(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
