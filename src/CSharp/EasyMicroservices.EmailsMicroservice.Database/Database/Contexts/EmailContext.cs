@@ -2,6 +2,7 @@
 using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
 using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using Microsoft.EntityFrameworkCore;
+using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
 
 namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
 {
