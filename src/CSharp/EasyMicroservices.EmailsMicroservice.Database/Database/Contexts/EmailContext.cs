@@ -1,5 +1,6 @@
-﻿using EasyMicroservices.EmailsMicroservice.Database.Entities;
-using EasyMicroservices.Cores.Relational.EntityFrameworkCore;
+﻿using EasyMicroservices.Cores.Relational.EntityFrameworkCore;
+using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
+using EasyMicroservices.EmailsMicroservice.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 using EasyMicroservices.Cores.Relational.EntityFrameworkCore.Intrerfaces;
 
@@ -49,7 +50,6 @@ namespace EasyMicroservices.EmailsMicroservice.Database.Contexts
                 model.HasOne(x => x.Queue)
                 .WithMany(x => x.SendEmails)
                 .HasForeignKey(x => x.QueueId);
-
             });
         }
     }

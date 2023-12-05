@@ -12,19 +12,16 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
     public class EmailController : SimpleQueryServiceController<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>
     {
-        public IUnitOfWork unitOfWork;
-        public IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _contractLogic;
-
-        public EmailController(IUnitOfWork uow) : base(uow)
+        readonly IUnitOfWork _unitOfWork;
+        public EmailController(IUnitOfWork  unitOfWork) : base(unitOfWork)
         {
-            unitOfWork = uow;
-            _contractLogic = uow.GetContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long>();
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
         public override async Task<MessageContract<long>> Add(CreateEmailRequestContract request, CancellationToken cancellationToken = default)
         {
-            var find = await _contractLogic.GetBy(x => x.Address == request.Address);
+            var find = await _unitOfWork.GetLongLogic<EmailEntity>().GetBy(x => x.Address == request.Address);
             if (!find)
                 return await base.Add(request, cancellationToken);
             return find.Result.Id;
@@ -35,7 +32,8 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
         {
             var decodedUniqueIdentity = DefaultUniqueIdentityManager.DecodeUniqueIdentity(request.UniqueIdentity);
 
-            var emails = await _contractLogic.GetAll(query => query.Where(o => o.Address.Contains(request.EmailAddress)));
+            var emails = await _unitOfWork.GetLongContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract>()
+                .GetAll(query => query.Where(o => o.Address.Contains(request.EmailAddress)));
 
             var filteredEmail = emails.Result
                 .Where(o => DefaultUniqueIdentityManager.CutUniqueIdentity(o.UniqueIdentity, decodedUniqueIdentity.Count()) == request.UniqueIdentity)
