@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyMicroservices.EmailsMicroservice.Migrations
 {
     [DbContext(typeof(EmailContext))]
-    [Migration("20230911094509_Initialize")]
-    partial class Initialize
+    [Migration("20230904143049_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,111 +67,7 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                     b.ToTable("Emails");
                 });
 
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreationDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FromEmailId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModificationDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ServerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UniqueIdentity")
-                        .HasColumnType("nvarchar(450)")
-                        .UseCollation("SQL_Latin1_General_CP1_CS_AS");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreationDateTime");
-
-                    b.HasIndex("DeletedDateTime");
-
-                    b.HasIndex("FromEmailId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ModificationDateTime");
-
-                    b.HasIndex("ServerId");
-
-                    b.HasIndex("UniqueIdentity");
-
-                    b.ToTable("QueueEmails");
-                });
-
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.SendEmailEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreationDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("EmailEntityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModificationDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("QueueId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UniqueIdentity")
-                        .HasColumnType("nvarchar(450)")
-                        .UseCollation("SQL_Latin1_General_CP1_CS_AS");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreationDateTime");
-
-                    b.HasIndex("DeletedDateTime");
-
-                    b.HasIndex("EmailEntityId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ModificationDateTime");
-
-                    b.HasIndex("QueueId");
-
-                    b.HasIndex("UniqueIdentity");
-
-                    b.ToTable("SendEmails");
-                });
-
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.ServerEntity", b =>
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailServerEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,23 +121,127 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                     b.ToTable("EmailServers");
                 });
 
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEntity", b =>
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEmailEntity", b =>
                 {
-                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailEntity", "FromEmail")
-                        .WithMany("Queues")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("EmailServerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FromEmailId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModificationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UniqueIdentity")
+                        .HasColumnType("nvarchar(450)")
+                        .UseCollation("SQL_Latin1_General_CP1_CS_AS");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreationDateTime");
+
+                    b.HasIndex("DeletedDateTime");
+
+                    b.HasIndex("EmailServerId");
+
+                    b.HasIndex("FromEmailId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ModificationDateTime");
+
+                    b.HasIndex("UniqueIdentity");
+
+                    b.ToTable("QueueEmails");
+                });
+
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.SendEmailEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("EmailEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModificationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("QueueEmailId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UniqueIdentity")
+                        .HasColumnType("nvarchar(450)")
+                        .UseCollation("SQL_Latin1_General_CP1_CS_AS");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreationDateTime");
+
+                    b.HasIndex("DeletedDateTime");
+
+                    b.HasIndex("EmailEntityId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ModificationDateTime");
+
+                    b.HasIndex("QueueEmailId");
+
+                    b.HasIndex("UniqueIdentity");
+
+                    b.ToTable("SendEmails");
+                });
+
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEmailEntity", b =>
+                {
+                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailServerEntity", "EmailServers")
+                        .WithMany("QueueEmails")
+                        .HasForeignKey("EmailServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailEntity", "Emails")
+                        .WithMany("QueueEmails")
                         .HasForeignKey("FromEmailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.ServerEntity", "Server")
-                        .WithMany("Queues")
-                        .HasForeignKey("ServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("EmailServers");
 
-                    b.Navigation("FromEmail");
-
-                    b.Navigation("Server");
+                    b.Navigation("Emails");
                 });
 
             modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.SendEmailEntity", b =>
@@ -250,30 +250,30 @@ namespace EasyMicroservices.EmailsMicroservice.Migrations
                         .WithMany("SendEmails")
                         .HasForeignKey("EmailEntityId");
 
-                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEntity", "Queue")
+                    b.HasOne("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEmailEntity", "QueueEmails")
                         .WithMany("SendEmails")
-                        .HasForeignKey("QueueId")
+                        .HasForeignKey("QueueEmailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Queue");
+                    b.Navigation("QueueEmails");
                 });
 
             modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailEntity", b =>
                 {
-                    b.Navigation("Queues");
+                    b.Navigation("QueueEmails");
 
                     b.Navigation("SendEmails");
                 });
 
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEntity", b =>
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.EmailServerEntity", b =>
                 {
-                    b.Navigation("SendEmails");
+                    b.Navigation("QueueEmails");
                 });
 
-            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.ServerEntity", b =>
+            modelBuilder.Entity("EasyMicroservices.EmailsMicroservice.Database.Entities.QueueEmailEntity", b =>
                 {
-                    b.Navigation("Queues");
+                    b.Navigation("SendEmails");
                 });
 #pragma warning restore 612, 618
         }
