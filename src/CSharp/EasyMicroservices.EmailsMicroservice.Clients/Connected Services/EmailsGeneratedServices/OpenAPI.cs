@@ -14,7 +14,7 @@
 #pragma warning disable 3016 // Disable "CS3016 Arrays as attribute arguments is not CLS-compliant"
 #pragma warning disable 8603 // Disable "CS8603 Possible null reference return"
 
-namespace Emailss.GeneratedServices
+namespace Emails.GeneratedServices
 {
     using System = global::System;
 
@@ -5531,21 +5531,21 @@ namespace Emailss.GeneratedServices
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.3.0))")]
     public partial class CreateQueueEmailRequestContract : System.ComponentModel.INotifyPropertyChanged
     {
-        private long _emailServerId;
+        private long _serverId;
         private long _fromEmailId;
         private QueueStatusType _status;
         private string _uniqueIdentity;
 
-        [Newtonsoft.Json.JsonProperty("emailServerId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public long EmailServerId
+        [Newtonsoft.Json.JsonProperty("serverId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public long ServerId
         {
-            get { return _emailServerId; }
+            get { return _serverId; }
 
             set
             {
-                if (_emailServerId != value)
+                if (_serverId != value)
                 {
-                    _emailServerId = value;
+                    _serverId = value;
                     RaisePropertyChanged();
                 }
             }
