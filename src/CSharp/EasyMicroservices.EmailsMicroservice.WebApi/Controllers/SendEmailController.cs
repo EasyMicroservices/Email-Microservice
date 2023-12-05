@@ -13,11 +13,6 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
 {
     public class SendEmailController : SimpleQueryServiceController<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long>
     {
-        //private readonly IContractLogic<SendEmailEntity, CreateSendEmailRequestContract, UpdateSendEmailRequestContract, SendEmailContract, long> _contractlogic;
-        //private readonly IContractLogic<EmailEntity, CreateEmailRequestContract, UpdateEmailRequestContract, EmailContract, long> _emaillogic;
-        //private readonly IContractLogic<QueueEntity, CreateQueueEmailRequestContract, UpdateQueueEmailRequestContract, EmailQueueContract, long> _QueueEmaillogic;
-        //private readonly IContractLogic<ServerEntity, CreateEmailServerRequestContract, UpdateEmailServerRequestContract, EmailServerContract, long> _emailserverlogic;
-
         readonly IUnitOfWork _unitOfWork;
         public SendEmailController(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
