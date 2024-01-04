@@ -27,11 +27,11 @@ namespace EasyMicroservices.EmailsMicroservice.WebApi.Controllers
                 .AsCheckedResult();
 
             var emailServer = await _unitOfWork.GetLongLogic<ServerEntity>()
-                .GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.ServerId })
+                .GetById(new Cores.Contracts.Requests.GetByIdRequestContract<long> { Id = checkQueueId.ServerId })
                 .AsCheckedResult();
 
             var email = await _unitOfWork.GetLongLogic<EmailEntity>()
-                .GetById(new Cores.Contracts.Requests.GetIdRequestContract<long> { Id = checkQueueId.FromEmailId })
+                .GetById(new Cores.Contracts.Requests.GetByIdRequestContract<long> { Id = checkQueueId.FromEmailId })
                 .AsCheckedResult();
 
             // Configure SMTP client settings
