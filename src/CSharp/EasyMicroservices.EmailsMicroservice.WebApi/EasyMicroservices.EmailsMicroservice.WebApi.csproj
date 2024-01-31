@@ -6,22 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyMicroservices.Cores.AspCoreApi" Version="0.0.0.61" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EasyMicroservices.EmailsMicroservice.StartUp\EasyMicroservices.EmailsMicroservice.StartUp.csproj" />
   </ItemGroup>
-	
-	<ItemGroup>
-		<Content Update="appsettings.json" CopyToPublishDirectory="Never" />
-		<Content Update="appsettings.*.json" CopyToPublishDirectory="Never" />
-		<Content Update="appsettings.$(MSBuildThisFileName).json" CopyToPublishDirectory="PreserveNewest" />
-	</ItemGroup>
+
+  <ItemGroup>
+    <Content Update="web.config" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.*.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.$(MSBuildThisFileName).json" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>
